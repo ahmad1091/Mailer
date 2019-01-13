@@ -5,6 +5,7 @@ const handlePages = (target, request, response) => {
   const reqPage = {
     signup: 'public/signup/index.html',
     signin: 'public/signin/index.html',
+    mailer: 'public/mailer/index.html',
     static: request.url,
   };
   const filePath = path.join(__dirname, '..', reqPage[target]);
