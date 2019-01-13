@@ -1,7 +1,7 @@
 const http = require('http');
-const handler = require('./handler');
+const router = require('./router');
 
-var server = http.createServer(handler);
+var server = http.createServer(router);
 
 server.listen(4000, function () {
 
