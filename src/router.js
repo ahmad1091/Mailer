@@ -9,6 +9,8 @@ const router = (request, response) => {
     handlePages('signin', request, response);
   } else if (endPoint === '/signup' && method === 'GET') {
     handlePages('signup', request, response);
+  } else if (endPoint === '/mailer' && method === 'GET') {
+    handlePages('mailer', request, response);
   } else if (endPoint.includes('public') && method === 'GET') {
     handleHome('static', request, response);
   }
