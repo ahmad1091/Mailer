@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/ahmad1091/Mailer#readme",
   "dependencies": {
-   "pg":"7.8.0"
+   "pg":"7.8.0",
+"bcryptjs":"2.4.3"
  },
   "devDependencies": {
     "eslint": "^5.12.0",
