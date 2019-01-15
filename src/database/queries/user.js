@@ -10,5 +10,11 @@ const newUser = (data, hash) => {
   };
   return dbConnection.query(sql);
 };
-
+const checkUser = (email, hash) => {
+  const sql = {
+    text: 'Select *form users where email=$1',
+    values: [email],
+  };
+  return dbConnection.query(sql);
+};
 module.exports = newUser;
