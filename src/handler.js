@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring');
 const bcrypt = require('bcryptjs');
-const newUser = require('./database/queries/user');
+const { sign } = require('jsonwebtoken');
+const { newUser, checkUser } = require('./database/queries/user');
 
 const handlePages = (target, request, response) => {
   const reqPage = {
@@ -46,19 +47,59 @@ const userRegistration = (request, response) => {
     bcrypt.hash(password, 10, (error, hash) => {
       if (error) {
         response.end('<h2>Server Error</h2>');
-        response.end(response.end(JSON.stringify({ error })));
       } else {
         newUser(parsedInfo, hash)
           .then(() => {
-            response.end(JSON.stringify({ err: null, msg: 'succesfull' }));
-          }).then(() => {
             response.writeHead(302, { location: '/mailer' });
+            response.end();
           }).catch((err) => {
-            response.end(response.end(JSON.stringify({ err: err.detail })));
+            response.end(JSON.stringify({ err: err.detail }));
           });
       }
     });
   });
 };
 
-module.exports = { handleHome, handlePages, userRegistration };
+const userSignin = (request, response) => {
+  let userInfo = '';
+  request.on('data', (chunk) => {
+    userInfo += chunk;
+  });
+  request.on('end', () => {
+    const paresdData = querystring.parse(userInfo);
+    const { email, password } = paresdData;
+
+    checkUser(email)
+      .then((result) => {
+        const { pass, id } = result.rows[0];
+        bcrypt.compare(password, pass)
+          .then((res) => {
+            if (res) {
+              const user = {
+                email,
+                user_id: id,
+              };
+              const userJWT = sign(user, process.env.SECRET);
+              response.setHeader('Set-Cookie', `jwt=${userJWT};`);
+              response.writeHead(302, {
+                location: '/mailer',
+              });
+              response.end();
+            } else {
+              response.writeHead(302, {
+                location: '/',
+              });
+              response.end();
+            }
+          }).catch((err) => {
+            response.end(JSON.stringify({ err: err.detail }));
+          });
+      }).catch((err) => {
+        response.end(JSON.stringify({ err: err.detail }));
+      });
+  });
+};
+
+module.exports = {
+  handleHome, handlePages, userRegistration, userSignin,
+};

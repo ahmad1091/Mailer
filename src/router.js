@@ -1,4 +1,6 @@
-const { handleHome, handlePages, userRegistration } = require('./handler');
+const {
+  handleHome, handlePages, userRegistration, userSignin,
+} = require('./handler');
 
 const router = (request, response) => {
   const endPoint = request.url;
@@ -13,6 +15,8 @@ const router = (request, response) => {
     handlePages('mailer', request, response);
   } else if (endPoint === '/signup' && method === 'POST') {
     userRegistration(request, response);
+  } else if (endPoint === '/signin' && method === 'POST') {
+    userSignin(request, response);
   } else if (endPoint.includes('public') && method === 'GET') {
     handleHome('static', request, response);
   }
