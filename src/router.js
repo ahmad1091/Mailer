@@ -1,5 +1,5 @@
 const {
-  handleHome, handlePages, userRegistration, userSignin,
+  handleHome, handlePages, userRegistration, userSignin, userSignout,
 } = require('./handler');
 
 const router = (request, response) => {
@@ -17,6 +17,8 @@ const router = (request, response) => {
     userRegistration(request, response);
   } else if (endPoint === '/signin' && method === 'POST') {
     userSignin(request, response);
+  } else if (endPoint === '/signout' && method === 'GET') {
+    userSignout(request, response);
   } else if (endPoint.includes('public') && method === 'GET') {
     handleHome('static', request, response);
   }
