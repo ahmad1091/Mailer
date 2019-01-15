@@ -99,7 +99,14 @@ const userSignin = (request, response) => {
       });
   });
 };
+const userSignout = (request, response) => {
+  response.writeHead(302, {
+    location: '/',
+    'Set-Cookie': 'jwt=0; Max-Age=0',
+  });
+  response.end();
+};
 
 module.exports = {
-  handleHome, handlePages, userRegistration, userSignin,
+  handleHome, handlePages, userRegistration, userSignin, userSignout,
 };
