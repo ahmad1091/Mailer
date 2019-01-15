@@ -50,8 +50,9 @@ const userRegistration = (request, response) => {
       } else {
         newUser(parsedInfo, hash)
           .then(() => {
+            response.end(JSON.stringify({ err: null, msg: 'succesfull' }));
+          }).then(() => {
             response.writeHead(302, { location: '/mailer' });
-            response.end();
           }).catch((err) => {
             response.end(response.end(JSON.stringify({ err: err.detail })));
           });
