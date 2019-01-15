@@ -44,10 +44,8 @@ const userRegistration = (request, response) => {
   request.on('end', () => {
     const parsedInfo = querystring.parse(userInfo);
     const { password } = parsedInfo;
-    bcrypt.hash(password, 10, (error, hash) => {
-      if (error) {
-        response.end('<h2>Server Error</h2>');
-      } else {
+    bcrypt.hash(password, 10)
+      .then((hash) => {
         newUser(parsedInfo, hash)
           .then(() => {
             response.writeHead(302, { location: '/mailer' });
@@ -55,8 +53,9 @@ const userRegistration = (request, response) => {
           }).catch((err) => {
             response.end(JSON.stringify({ err: err.detail }));
           });
-      }
-    });
+      }).catch((error) => {
+        response.end(JSON.stringify({ err: error.detail }));
+      });
   });
 };
 
