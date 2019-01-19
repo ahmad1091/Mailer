@@ -10,6 +10,7 @@ const newUser = (data, hash) => {
   };
   return dbConnection.query(sql);
 };
+
 const checkUser = (email) => {
   const sql = {
     text: 'select * from users where email=$1',
