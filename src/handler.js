@@ -99,6 +99,7 @@ const userSignin = (request, response) => {
       });
   });
 };
+
 const userSignout = (request, response) => {
   response.writeHead(302, {
     location: '/',

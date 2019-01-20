@@ -1,6 +1,7 @@
 const {
   handleHome, handlePages, userRegistration, userSignin, userSignout,
 } = require('./handler');
+const auth = require('./authentication');
 
 const router = (request, response) => {
   const endPoint = request.url;
@@ -12,7 +13,7 @@ const router = (request, response) => {
   } else if (endPoint === '/signup' && method === 'GET') {
     handlePages('signup', request, response);
   } else if (endPoint === '/mailer' && method === 'GET') {
-    handlePages('mailer', request, response);
+    auth(request, response, handlePages('mailer', request, response));
   } else if (endPoint === '/signup' && method === 'POST') {
     userRegistration(request, response);
   } else if (endPoint === '/signin' && method === 'POST') {
