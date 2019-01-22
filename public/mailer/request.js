@@ -1,6 +1,7 @@
 
-function request(method, url, cb) {
+function request(data, method, url, cb) {
   const xhr = new XMLHttpRequest();
+
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
@@ -12,5 +13,6 @@ function request(method, url, cb) {
     }
   };
   xhr.open(method, url, true);
-  xhr.send();
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(data));
 }
