@@ -111,16 +111,13 @@ const userSignout = (request, response) => {
 };
 
 const handleMail = (request, response) => {
-  console.log('handleMail function.....');
   let message = '';
   request.on('data', (chunk) => {
     message += chunk;
   });
 
   request.on('end', () => {
-    console.log('request message', message);
     const parsedFile = JSON.parse(message);
-    console.log('parsedFile.....', parsedFile);
     mailer(parsedFile);
     response.end(JSON.stringify({ msg: 'hi there' }));
   });
