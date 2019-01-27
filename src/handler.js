@@ -3,6 +3,8 @@ const path = require('path');
 const querystring = require('querystring');
 const bcrypt = require('bcryptjs');
 const { sign } = require('jsonwebtoken');
+const mailer = require('./mailer');
+
 const { newUser, checkUser } = require('./database/queries/user');
 
 const handlePages = (target, request, response) => {
@@ -108,6 +110,22 @@ const userSignout = (request, response) => {
   response.end();
 };
 
+const handleMail = (request, response) => {
+  console.log('handleMail function.....');
+  let message = '';
+  request.on('data', (chunk) => {
+    message += chunk;
+  });
+
+  request.on('end', () => {
+    console.log('request message', message);
+    const parsedFile = JSON.parse(message);
+    console.log('parsedFile.....', parsedFile);
+    mailer(parsedFile);
+    response.end(JSON.stringify({ msg: 'hi there' }));
+  });
+};
+
 module.exports = {
-  handleHome, handlePages, userRegistration, userSignin, userSignout,
+  handleHome, handlePages, userRegistration, userSignin, userSignout, handleMail,
 };
