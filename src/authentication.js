@@ -9,9 +9,20 @@ const auth = (request, response, cb) => {
       if (res.rows.length > 0) {
         return cb();
       }
+      response.writeHead(302, {
+        location: '/',
+      });
       return response.end(JSON.stringify({ msg: 'you must Sign in first' }));
-    }).catch(() => response.end(JSON.stringify({ msg: 'you must Sign in first' })));
+    }).catch(() => {
+      response.writeHead(302, {
+        location: '/',
+      });
+      response.end(JSON.stringify({ msg: 'you must Sign in first' }));
+    });
   } else {
+    response.writeHead(302, {
+      location: '/',
+    });
     return response.end(JSON.stringify({ msg: 'you must Sign in first' }));
   }
 };

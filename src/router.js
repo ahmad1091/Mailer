@@ -24,6 +24,8 @@ const router = (request, response) => {
     userSignout(request, response);
   } else if (endPoint.includes('public') && method === 'GET') {
     handleHome('static', request, response);
+  } else {
+    handleHome('home', request, response);
   }
 };
 
