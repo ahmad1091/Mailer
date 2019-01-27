@@ -7,12 +7,22 @@
   </head>
   <body>
     <a href="/signout">Signout</a>
-<form class="" action="index.html" method="post">
+<form name="form" action="index.html" method="post">
   <p>hello to mailer page</p>
+  <label for="">Name</label>
+  <input id='name' type="text" name="name" value="">
+  <label for="">Company</label>
+  <input id='company'type="text" name="company" value="">
+  <label for="">Phone</label>
+  <input id='phone'type="text" name="phone" value="">
   <label for="">Enter your email</label>
-  <input type="email" name="" value="">
+  <input id='email'type="email" name="email" value="">
   <label for="">Message</label>
-  <textarea name="name" rows="8" cols="80"></textarea>
+  <textarea id="message" name="message" rows="8" cols="80"></textarea>
+  <input id="attachment" type="file" name="attachment" value="">
+  <button id="button" type="button" name="button">Send</button>
 </form>
   </body>
+  <script src="/public/mailer/request.js"></script>
+  <script src="/public/mailer/index.js"></script>
 </html>
